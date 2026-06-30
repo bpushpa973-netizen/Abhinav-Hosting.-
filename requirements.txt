@@ -1,0 +1,6 @@
+Flask
+Flask-SocketIO
+Werkzeug
+psutil
+gunicorn
+eventlet
