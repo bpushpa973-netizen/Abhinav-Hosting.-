@@ -1,0 +1,7 @@
+Flask
+Flask-SocketIO
+Werkzeug
+psutil
+gunicorn
+eventlet
+psycopg2-binary
