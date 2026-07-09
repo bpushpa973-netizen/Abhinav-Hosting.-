@@ -3,288 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
-    <title>𝐀𝐁𝐇𝐈𝐍𝐀𝐕 𝐇𝐎𝐒𝐓𝐈𝐍𝐆 | ACCESS SECURE</title>
-    
+    <title>Access — Abhinav Hosting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
         :root {
-            --accent: #007aff; 
-            --accent-glow: rgba(0, 122, 255, 0.4);
-            --bg: #000000;
-            --card-bg: rgba(28, 28, 30, 0.6);
-            --border: rgba(255, 255, 255, 0.12);
-            --input-bg: rgba(255, 255, 255, 0.06);
-            --text-secondary: #8e8e93;
+            --bg:#010103; --surface:#0a0a0f; --accent:#00e5a0;
+            --accent-dim:rgba(0,229,160,0.1); --accent-border:rgba(0,229,160,0.22);
+            --border:rgba(255,255,255,0.06); --muted:#4a5568;
+            --text:#c9d1d9; --mono:'JetBrains Mono',monospace;
         }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
         body {
-            background-color: var(--bg);
-            height: 100dvh; /* Dynamic viewport height for mobile browsers */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            color: #fff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0;
-            position: relative;
+            font-family:'Space Grotesk',sans-serif; background:var(--bg);
+            min-height:100dvh; display:flex; align-items:center; justify-content:center;
+            color:var(--text); position:relative; overflow:hidden;
+        }
+        body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px); }
+        body::after  { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(0,229,160,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,0.025) 1px,transparent 1px); background-size:40px 40px; }
+        .glow { position:fixed; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(0,229,160,0.05) 0%,transparent 70%); top:-150px; right:-150px; pointer-events:none; z-index:0; }
+
+        .card {
+            position:relative; z-index:10;
+            width:92%; max-width:360px;
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:12px; padding:30px 24px;
+            box-shadow:0 0 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,229,160,0.04) inset;
         }
 
-        /* Advanced Mesh Background */
-        .mesh-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        .orb {
-            position: absolute; border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.5;
-            animation: move 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
-        }
-        .orb-1 { width: 500px; height: 500px; background: #0047ab; top: -10%; left: -10%; }
-        .orb-2 { width: 400px; height: 400px; background: #007aff; bottom: -5%; right: -5%; animation-delay: -5s; }
-        .orb-3 { width: 300px; height: 300px; background: #5856d6; top: 40%; left: 30%; animation-duration: 25s; }
+        .card-header { margin-bottom:24px; }
+        .sys-label { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+        .sys-label::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); display:inline-block; animation:blink 2s infinite; }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+        h1 { font-family:var(--mono); font-size:18px; font-weight:700; color:#fff; letter-spacing:-0.3px; }
+        .sub { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
 
-        @keyframes move {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(100px, 50px) scale(1.2); }
+        .field { margin-bottom:12px; }
+        .field label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:6px; }
+        .field input {
+            width:100%; padding:11px 14px;
+            background:rgba(255,255,255,0.03); border:1px solid var(--border);
+            border-radius:7px; color:var(--text); font-size:13px;
+            font-family:var(--mono); outline:none; transition:0.2s;
         }
+        .field input::placeholder { color:var(--muted); }
+        .field input:focus { border-color:var(--accent-border); background:rgba(0,229,160,0.04); box-shadow:0 0 0 3px rgba(0,229,160,0.08); }
 
-        /* Login Card */
-        .login-card {
-            width: 92%;
-            max-width: 420px;
-            background: var(--card-bg);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .brand-icon {
-            width: 80px; height: 80px;
-            background: linear-gradient(145deg, #1c1c1e, #2c2c2e);
-            border-radius: 22px;
-            margin: 0 auto 20px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 35px; color: var(--accent);
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        /* Pulse effect for icon */
-        .brand-icon::after {
-            content: '';
-            position: absolute; width: 100%; height: 100%;
-            border-radius: 22px; border: 2px solid var(--accent);
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        h2 { font-size: 30px; font-weight: 800; letter-spacing: -1.2px; margin: 0 0 8px; }
-        .subtitle { color: var(--text-secondary); font-size: 15px; margin-bottom: 35px; font-weight: 500; }
-
-        .input-wrapper { position: relative; margin-bottom: 20px; }
-        
-        .input-wrapper i.main-icon {
-            position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
-            color: #636366; transition: 0.3s; font-size: 18px;
-        }
-
-        .input-wrapper input {
-            width: 100%; padding: 18px 50px 18px 52px;
-            background: var(--input-bg);
-            border: 1px solid transparent;
-            border-radius: 18px; color: #fff; font-size: 16px;
-            outline: none; transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .input-wrapper input:focus {
-            background: rgba(255, 255, 255, 0.01);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--accent-glow);
-        }
-
-        .input-wrapper input:focus ~ i.main-icon { color: var(--accent); }
-
-        .pass-toggle {
-            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-            color: #636366; cursor: pointer; padding: 5px; transition: 0.2s;
-        }
-        .pass-toggle:hover { color: #fff; }
+        .pass-wrap { position:relative; }
+        .pass-wrap input { padding-right:38px; }
+        .pass-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--muted); cursor:pointer; font-size:12px; transition:0.2s; }
+        .pass-eye:hover { color:var(--accent); }
 
         .btn-submit {
-            width: 100%; padding: 18px;
-            background: var(--accent);
-            border: none; border-radius: 18px;
-            color: #fff; font-size: 17px; font-weight: 700;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3);
+            width:100%; padding:12px;
+            background:var(--accent); color:#000;
+            border:none; border-radius:7px;
+            font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:0.5px;
+            cursor:pointer; transition:0.2s; margin-top:4px;
+            display:flex; align-items:center; justify-content:center; gap:8px;
         }
+        .btn-submit:hover { background:#00ffb3; }
+        .btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
 
-        .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 15px 30px rgba(0, 122, 255, 0.4); }
-        .btn-submit:active { transform: translateY(0); }
-        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        .footer-link { margin-top: 25px; font-size: 14px; color: var(--text-secondary); }
-        .footer-link a { color: var(--accent); text-decoration: none; font-weight: 700; transition: 0.2s; }
-        .footer-link a:hover { opacity: 0.8; }
-
-        /* iOS Alert Styling */
-        .swal2-ios-custom {
-            background: rgba(30, 30, 32, 0.9) !important;
-            backdrop-filter: blur(25px) !important;
-            border-radius: 24px !important;
-            border: 1px solid var(--border) !important;
-            color: white !important;
-        }
-
-        @media (max-width: 400px) {
-            .login-card { padding: 35px 20px; }
-            h2 { font-size: 26px; }
-        }
+        .card-footer { margin-top:18px; border-top:1px solid var(--border); padding-top:14px; text-align:center; }
+        .card-footer span { font-family:var(--mono); font-size:10px; color:var(--muted); }
+        .card-footer a { color:var(--accent); text-decoration:none; font-weight:600; }
     </style>
 </head>
 <body>
-
-    <div class="mesh-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
-    <div class="login-card animate__animated animate__zoomIn">
-        <div class="brand-icon">
-            <i class="fa-solid fa-shield-halved"></i>
+    <div class="glow"></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="sys-label">ABHINAV SECURE ACCESS</div>
+            <h1>Authentication</h1>
+            <div class="sub">// Enter credentials to continue</div>
         </div>
-        <h2>Abhinav Hosting</h2>
-        <p class="subtitle">Cloud Management & Security</p>
 
         <form id="authForm" onsubmit="handleAuth(event)">
-            <div class="input-wrapper">
-                <input type="email" name="email" placeholder="Email Address" required autocomplete="email">
-                <i class="fa-solid fa-envelope-open main-icon"></i>
+            <div class="field">
+                <label>Identifier</label>
+                <input type="text" name="email" placeholder="email or username" required autocomplete="username">
             </div>
-            
-            <div class="input-wrapper">
-                <input type="password" name="password" id="passInput" placeholder="Password" required>
-                <i class="fa-solid fa-key main-icon"></i>
-                <i class="fa-solid fa-eye-slash pass-toggle" onclick="togglePassword()"></i>
+            <div class="field">
+                <label>Password</label>
+                <div class="pass-wrap">
+                    <input type="password" name="password" id="passInput" placeholder="••••••••••" required>
+                    <i class="fas fa-eye-slash pass-eye" onclick="togglePass()"></i>
+                </div>
             </div>
-
             <button type="submit" class="btn-submit" id="submitBtn">
-                <span>Secure Sign In</span>
-                <i class="fa-solid fa-chevron-right" style="font-size: 14px;"></i>
+                <span>AUTHENTICATE</span>
+                <i class="fas fa-arrow-right" style="font-size:11px;"></i>
             </button>
         </form>
 
-        <div class="footer-link">
-            New here? <a href="/signup">Create an account</a>
+        <div class="card-footer">
+            <span>No account? <a href="/signup">Request access</a></span>
         </div>
     </div>
 
     <script>
-        // Smooth Password Toggle
-        function togglePassword() {
-            const input = document.getElementById('passInput');
-            const icon = document.querySelector('.pass-toggle');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            }
+        function togglePass() {
+            const i = document.getElementById('passInput');
+            const e = document.querySelector('.pass-eye');
+            i.type = i.type === 'password' ? 'text' : 'password';
+            e.classList.toggle('fa-eye'); e.classList.toggle('fa-eye-slash');
         }
-
         async function handleAuth(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const btnText = btn.querySelector('span');
-            const btnIcon = btn.querySelector('i');
-            
-            btn.disabled = true;
-            btnText.innerText = 'Verifying...';
-            btnIcon.className = 'fa-solid fa-circle-notch fa-spin';
-
+            const span = btn.querySelector('span');
+            btn.disabled = true; span.textContent = 'VERIFYING...';
             try {
-                const formData = new FormData(e.target);
-                const response = await fetch('/login', { 
-                    method: 'POST', 
-                    body: formData 
-                });
-
-                const data = await response.json();
-
-                if (response.status === 200) {
-                    Swal.fire({
-                        icon: 'success', title: 'Identity Verified', text: 'Redirecting to your dashboard...',
-                        timer: 2000, showConfirmButton: false, customClass: { popup: 'swal2-ios-custom' }
-                    });
-                    setTimeout(() => window.location.href = data.url, 1800);
-                } 
-                else if (response.status === 403) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Access Restricted',
-                        text: data.msg || 'This account has been flagged and suspended.',
-                        showCancelButton: true,
-                        confirmButtonText: '<i class="fa-brands fa-telegram"></i> Appeal Access',
-                        cancelButtonText: 'Close',
-                        customClass: { popup: 'swal2-ios-custom' }
-                    }).then((result) => {
-                        if (result.isConfirmed) window.open('https://t.me/JOY_100K', '_blank');
-                    });
+                const res = await fetch('/login', { method:'POST', body: new FormData(e.target) });
+                const d = await res.json();
+                if(res.status === 200) {
+                    span.textContent = 'ACCESS GRANTED'; setTimeout(() => window.location.href = d.url, 600);
+                } else if(res.status === 403) {
+                    Swal.fire({ icon:'error', title:'Access Denied', text:d.msg, background:'#0a0a0f', color:'#c9d1d9', confirmButtonColor:'#00e5a0' });
                     reset();
-                } 
-                else {
-                    Swal.fire({ 
-                        icon: 'warning', 
-                        title: 'Auth Failed', 
-                        text: data.msg || 'Invalid credentials provided.', 
-                        customClass: { popup: 'swal2-ios-custom' } 
-                    });
+                } else {
+                    Swal.fire({ icon:'warning', title:'Auth Failed', text:d.msg || 'Invalid credentials.', background:'#0a0a0f', color:'#c9d1d9', confirmButtonColor:'#00e5a0' });
                     reset();
                 }
-            } catch (err) {
-                Swal.fire({ 
-                    icon: 'error', 
-                    title: 'System Error', 
-                    text: 'Unable to reach the server. Please try again.', 
-                    customClass: { popup: 'swal2-ios-custom' } 
-                });
-                reset();
-            }
-
-            function reset() {
-                btn.disabled = false;
-                btnText.innerText = 'Secure Sign In';
-                btnIcon.className = 'fa-solid fa-chevron-right';
-            }
+            } catch { reset(); }
+            function reset() { btn.disabled = false; span.textContent = 'AUTHENTICATE'; }
         }
     </script>
 </body>
